@@ -9,14 +9,24 @@ android {
     buildToolsVersion "29.0.2"
     defaultConfig {
         applicationId "com.sunragav.suitepad.webview"
-        minSdkVersion 24
+        minSdkVersion 21
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
+        debug{
+            buildConfigField('String', 'PROXY_SERVICE_APPLICATION_ID', "\"${PROXY_SERVICE_APPLICATION_ID}\"")
+            buildConfigField('String', 'PROXY_SERVICE_CLASSNAME', "\"${PROXY_SERVICE_CLASSNAME}\"")
+            buildConfigField('String', 'ACTION_BROADCAST_PROXY_STARTED', "\"${ACTION_BROADCAST_PROXY_STARTED}\"")
+            buildConfigField('String', 'ACTION_MOVE_TO_FOREGROUND', "\"${ACTION_MOVE_TO_FOREGROUND}\"")
+        }
         release {
+            buildConfigField('String', 'PROXY_SERVICE_APPLICATION_ID', "\"${PROXY_SERVICE_APPLICATION_ID}\"")
+            buildConfigField('String', 'PROXY_SERVICE_CLASSNAME', "\"${PROXY_SERVICE_CLASSNAME}\"")
+            buildConfigField('String', 'ACTION_BROADCAST_PROXY_STARTED', "\"${ACTION_BROADCAST_PROXY_STARTED}\"")
+            buildConfigField('String', 'ACTION_MOVE_TO_FOREGROUND', "\"${ACTION_MOVE_TO_FOREGROUND}\"")
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -32,6 +42,8 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+    implementation 'com.squareup.okhttp3:okhttp:4.1.0'
 
 
 }
