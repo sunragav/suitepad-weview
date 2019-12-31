@@ -1,0 +1,6 @@
+ext {
+
+    okhttpVersion = "4.2.2"
+    rxJavaVersion = "2.2.0"
+    rxRelayVersion = "2.1.1"
+}

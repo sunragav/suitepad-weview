@@ -21,12 +21,14 @@ android {
             buildConfigField('String', 'PROXY_SERVICE_CLASSNAME', "\"${PROXY_SERVICE_CLASSNAME}\"")
             buildConfigField('String', 'ACTION_BROADCAST_PROXY_STARTED', "\"${ACTION_BROADCAST_PROXY_STARTED}\"")
             buildConfigField('String', 'ACTION_MOVE_TO_FOREGROUND', "\"${ACTION_MOVE_TO_FOREGROUND}\"")
+            buildConfigField('String', 'BASE_URL', "\"${BASE_URL}\"")
         }
         release {
             buildConfigField('String', 'PROXY_SERVICE_APPLICATION_ID', "\"${PROXY_SERVICE_APPLICATION_ID}\"")
             buildConfigField('String', 'PROXY_SERVICE_CLASSNAME', "\"${PROXY_SERVICE_CLASSNAME}\"")
             buildConfigField('String', 'ACTION_BROADCAST_PROXY_STARTED', "\"${ACTION_BROADCAST_PROXY_STARTED}\"")
             buildConfigField('String', 'ACTION_MOVE_TO_FOREGROUND', "\"${ACTION_MOVE_TO_FOREGROUND}\"")
+            buildConfigField('String', 'BASE_URL', "\"${BASE_URL}\"")
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -43,7 +45,8 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
-    implementation 'com.squareup.okhttp3:okhttp:4.1.0'
-
+    implementation "com.squareup.okhttp3:okhttp:$okhttpVersion"
+    implementation "io.reactivex.rxjava2:rxjava:$rxJavaVersion"
+    implementation "com.jakewharton.rxrelay2:rxrelay:$rxRelayVersion"
 
 }

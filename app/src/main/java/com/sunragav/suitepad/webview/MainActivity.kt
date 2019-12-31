@@ -4,8 +4,10 @@ import android.annotation.SuppressLint
 import android.content.*
 import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import androidx.appcompat.app.AppCompatActivity
 import com.sunragav.suitepad.webview.BuildConfig.*
+import com.sunragav.suitepad.webview.utils.OkHttpWebClient
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -29,7 +31,7 @@ class MainActivity : AppCompatActivity() {
         webView.settings.apply {
             javaScriptEnabled = true
         }
-        receiver = MyReceiver()
+        receiver = ServerStartedActionReceiver()
         val filter = IntentFilter()
         filter.addAction(ACTION_BROADCAST_PROXY_STARTED)
         registerReceiver(receiver, filter)
@@ -43,11 +45,6 @@ class MainActivity : AppCompatActivity() {
         } else {
             startService(intent)
         }
-    }
-
-
-    private fun loadWebView(port: Int) {
-        webView.loadUrl("http://localhost:$port/sample.html")
     }
 
     override fun finish() {
@@ -66,7 +63,9 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    inner class MyReceiver : BroadcastReceiver() {
+    inner class ServerStartedActionReceiver : BroadcastReceiver() {
+        private val SAMPLE_HTML = "sample.html"
+
         override fun onReceive(
             context: Context,
             intent: Intent
@@ -74,7 +73,8 @@ class MainActivity : AppCompatActivity() {
             println("Proxy Server started broadcast has been received")
             when (intent.action) {
                 ACTION_BROADCAST_PROXY_STARTED -> {
-                    loadWebView(intent.getIntExtra("port",0))
+                    webView.webViewClient = OkHttpWebClient(intent.getIntExtra("port",0))
+                    webView.loadUrl("$BASE_URL$SAMPLE_HTML")
                 }
             }
 
