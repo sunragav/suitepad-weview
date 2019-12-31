@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.*
 import android.os.Build
 import android.os.Bundle
-import android.provider.Settings
 import androidx.appcompat.app.AppCompatActivity
 import com.sunragav.suitepad.webview.BuildConfig.*
 import com.sunragav.suitepad.webview.utils.OkHttpWebClient

@@ -8,12 +8,14 @@ import com.sunragav.suitepad.webview.BuildConfig.BASE_URL
 import io.reactivex.Single
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import java.util.concurrent.TimeUnit
 
 
 class OkHttpWebClient(private val port: Int) : WebViewClient() {
+    private val OCTET_STREAM = "image/gif".toMediaTypeOrNull()
     private val okHttpClient = OkHttpClient
         .Builder()
         .cache(null)
@@ -44,7 +46,7 @@ class OkHttpWebClient(private val port: Int) : WebViewClient() {
     private fun handleRequestViaOkHttp(url: String): WebResourceResponse {
         val call = okHttpClient.newCall(
             Request.Builder()
-                .url(url.replace(BASE_URL, "http://localhost:$port"))
+                .url(url.replace(BASE_URL, "http://localhost:$port/"))
                 .build()
         )
         val disposable = CompositeDisposable()
