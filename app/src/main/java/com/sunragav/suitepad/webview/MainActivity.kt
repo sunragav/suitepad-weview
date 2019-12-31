@@ -5,47 +5,35 @@ import android.content.*
 import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.sunragav.suitepad.webview.BuildConfig.*
 import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : AppCompatActivity() {
-    companion object {
-        private const val APPLICATION_ID = "com.sunragav.suitepad.proxyserver"
-        private const val CLASSNAME = "com.sunragav.suitepad.proxyserver.ProxyWebServer"
-        private const val BROADCAST_ACTION_FOREGROUND =
-            "com.sunragav.suitepad.proxy.ProxyServerForegroundBroadCast"
-        private const val BROADCAST_ACTION_PROXY_STARTED =
-            "com.sunragav.suitepad.proxy.ProxyServerStarted"
-        private const val MOVE_TO_FOREGROUND_ACTION = "com.sunragav.suitepad.proxy.MoveToForeground"
-    }
 
-    lateinit var receiver: BroadcastReceiver
 
-    private val moveToForeGround = Intent().apply {
-        action = MOVE_TO_FOREGROUND_ACTION
+    private lateinit var receiver: BroadcastReceiver
+
+    private val moveProxyServiceToForeGround = Intent().apply {
+        action = ACTION_MOVE_TO_FOREGROUND
         component = ComponentName(
-            APPLICATION_ID,
-            CLASSNAME
+            PROXY_SERVICE_APPLICATION_ID,
+            PROXY_SERVICE_CLASSNAME
         )
     }
-
 
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         webView.settings.apply {
-            allowFileAccess = true
-            allowFileAccessFromFileURLs = true
-            allowUniversalAccessFromFileURLs = true
-            allowContentAccess = true
             javaScriptEnabled = true
         }
         receiver = MyReceiver()
         val filter = IntentFilter()
-        filter.addAction(BROADCAST_ACTION_PROXY_STARTED)
+        filter.addAction(ACTION_BROADCAST_PROXY_STARTED)
         registerReceiver(receiver, filter)
-        startProxyService(moveToForeGround)
+        startProxyService(moveProxyServiceToForeGround)
     }
 
 
@@ -58,16 +46,23 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    private fun loadWebView() {
-        webView.loadUrl("http://localhost:8091/sample.html")
+    private fun loadWebView(port: Int) {
+        webView.loadUrl("http://localhost:$port/sample.html")
     }
 
-
+    override fun finish() {
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            super.finishAndRemoveTask()
+        }
+        else {
+            super.finish()
+        }
+    }
 
     override fun onDestroy() {
         super.onDestroy()
         unregisterReceiver(receiver)
-        stopService(moveToForeGround)
+        stopService(moveProxyServiceToForeGround)
     }
 
 
@@ -78,7 +73,9 @@ class MainActivity : AppCompatActivity() {
         ) {
             println("Proxy Server started broadcast has been received")
             when (intent.action) {
-                BROADCAST_ACTION_PROXY_STARTED -> loadWebView()
+                ACTION_BROADCAST_PROXY_STARTED -> {
+                    loadWebView(intent.getIntExtra("port",0))
+                }
             }
 
         }
