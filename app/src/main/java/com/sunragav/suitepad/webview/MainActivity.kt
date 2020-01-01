@@ -105,7 +105,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    class IncomingHandler(val activityRef:WeakReference<MainActivity>) : Handler() {
+    class IncomingHandler(private val activityRef:WeakReference<MainActivity>) : Handler() {
         override fun handleMessage(msg: Message) {
             when (msg.what) {
                 MSG_HTTP_SERVER_STARTED -> {
