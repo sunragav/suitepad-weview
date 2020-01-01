@@ -19,21 +19,21 @@ android {
     buildTypes {
         debug{
             buildConfigField('String', 'FILEPROVIDER_APPLICATION_ID', "\"${FILEPROVIDER_APPLICATION_ID}\"")
-            buildConfigField('String', 'FILEPROVIDER_CLASSNAME', "\"${FILEPROVIDER_CLASSNAME}\"")
             buildConfigField('String', 'PROXY_SERVICE_APPLICATION_ID', "\"${PROXY_SERVICE_APPLICATION_ID}\"")
             buildConfigField('String', 'PROXY_SERVICE_CLASSNAME', "\"${PROXY_SERVICE_CLASSNAME}\"")
             buildConfigField('String', 'ACTION_BROADCAST_PROXY_STARTED', "\"${ACTION_BROADCAST_PROXY_STARTED}\"")
             buildConfigField('String', 'ACTION_MOVE_TO_FOREGROUND', "\"${ACTION_MOVE_TO_FOREGROUND}\"")
             buildConfigField('String', 'BASE_URL', "\"${BASE_URL}\"")
+            buildConfigField('String', 'USE_BOUND_SERVICE', "\"${USE_BOUND_SERVICE}\"")
         }
         release {
             buildConfigField('String', 'FILEPROVIDER_APPLICATION_ID', "\"${FILEPROVIDER_APPLICATION_ID}\"")
-            buildConfigField('String', 'FILEPROVIDER_CLASSNAME', "\"${FILEPROVIDER_CLASSNAME}\"")
             buildConfigField('String', 'PROXY_SERVICE_APPLICATION_ID', "\"${PROXY_SERVICE_APPLICATION_ID}\"")
             buildConfigField('String', 'PROXY_SERVICE_CLASSNAME', "\"${PROXY_SERVICE_CLASSNAME}\"")
             buildConfigField('String', 'ACTION_BROADCAST_PROXY_STARTED', "\"${ACTION_BROADCAST_PROXY_STARTED}\"")
             buildConfigField('String', 'ACTION_MOVE_TO_FOREGROUND', "\"${ACTION_MOVE_TO_FOREGROUND}\"")
             buildConfigField('String', 'BASE_URL', "\"${BASE_URL}\"")
+            buildConfigField('String', 'USE_BOUND_SERVICE', "\"${USE_BOUND_SERVICE}\"")
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
