@@ -4,16 +4,18 @@ import android.annotation.SuppressLint
 import android.content.*
 import android.os.Build
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.sunragav.suitepad.webview.BuildConfig.*
 import com.sunragav.suitepad.webview.utils.OkHttpWebClient
 import com.sunragav.suitepad.webview.utils.areRequiredPackagesPresent
+import com.sunragav.suitepad.webview.utils.isFileProviderThere
+import com.sunragav.suitepad.webview.utils.isProxyWebserverThere
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.package_not_available.*
 
 
 class MainActivity : AppCompatActivity() {
-
 
     private lateinit var receiver: BroadcastReceiver
 
@@ -30,7 +32,6 @@ class MainActivity : AppCompatActivity() {
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         if (areRequiredPackagesPresent()) {
             setContentView(R.layout.activity_main)
             webView.settings.apply {
@@ -44,6 +45,8 @@ class MainActivity : AppCompatActivity() {
             startedService = true
         } else {
             setContentView(R.layout.package_not_available)
+            if (isFileProviderThere()) cv_fileprovider.visibility = View.GONE
+            if (isProxyWebserverThere()) cv_proxyservice.visibility = View.GONE
         }
     }
 
@@ -72,10 +75,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
     inner class ServerStartedActionReceiver : BroadcastReceiver() {
-        private val SAMPLE_HTML = "sample.html"
-
         override fun onReceive(
             context: Context,
             intent: Intent
@@ -89,5 +89,9 @@ class MainActivity : AppCompatActivity() {
             }
 
         }
+    }
+
+    companion object {
+        private const val SAMPLE_HTML = "sample.html"
     }
 }

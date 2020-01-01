@@ -15,8 +15,19 @@ fun Activity.isPackageInstalled(packageName: String): Boolean {
     }
 }
 
+
 fun Activity.areRequiredPackagesPresent(): Boolean {
-    return isPackageInstalled(FILEPROVIDER_APPLICATION_ID) && isPackageInstalled(
-        PROXY_SERVICE_APPLICATION_ID
-    )
+    return isFileProviderThere() && isProxyWebserverThere()
 }
+
+
+fun Activity.isFileProviderThere(): Boolean {
+    return isPackageInstalled(FILEPROVIDER_APPLICATION_ID)
+}
+
+fun Activity.isProxyWebserverThere(): Boolean {
+    return isPackageInstalled(PROXY_SERVICE_APPLICATION_ID)
+}
+
+
+
