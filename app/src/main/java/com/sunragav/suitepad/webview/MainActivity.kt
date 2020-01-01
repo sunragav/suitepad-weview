@@ -38,6 +38,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private var isBound = false
+    private val messengerToReceiveMsgFromRemoteService = Messenger(IncomingHandler(WeakReference(this)))
+    lateinit var messengerToSendMsgToRemoteService: Messenger
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -125,11 +127,10 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    val serviceConnection = object : ServiceConnection {
+    private val serviceConnection = object : ServiceConnection {
         override fun onServiceDisconnected(name: ComponentName?) {
             isBound = false
         }
-
         override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
             isBound = true
             messengerToSendMsgToRemoteService = Messenger(service).also {
@@ -142,8 +143,6 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
-    val messengerToReceiveMsgFromRemoteService = Messenger(IncomingHandler(WeakReference(this)))
-    lateinit var messengerToSendMsgToRemoteService: Messenger
 
 
     companion object {
