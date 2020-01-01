@@ -17,19 +17,6 @@ import java.lang.ref.WeakReference
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var receiver: BroadcastReceiver
-
-    private var startedService = false
-
-    private val useBoundService = USE_BOUND_SERVICE == "1"
-
-    private val intentToMoveProxyServiceToForeGround = Intent().apply {
-        action = ACTION_MOVE_TO_FOREGROUND
-        component = ComponentName(
-            PROXY_SERVICE_APPLICATION_ID,
-            PROXY_SERVICE_CLASSNAME
-        )
-    }
     private val intentToBindToProxyServiceToForeGround = Intent().apply {
         component = ComponentName(
             PROXY_SERVICE_APPLICATION_ID,
@@ -38,23 +25,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     private var isBound = false
-    private val messengerToReceiveMsgFromRemoteService = Messenger(IncomingHandler(WeakReference(this)))
+
+    private val messengerToReceiveMsgFromRemoteService =
+        Messenger(IncomingHandler(WeakReference(this)))
+
     lateinit var messengerToSendMsgToRemoteService: Messenger
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (areRequiredPackagesPresent()) {
             setContentView(R.layout.activity_main)
-            if(useBoundService) {
-                bindService(intentToBindToProxyServiceToForeGround, serviceConnection, BIND_AUTO_CREATE)
-            }else {
-                receiver = ServerStartedActionReceiver()
-                val filter = IntentFilter()
-                filter.addAction(ACTION_BROADCAST_PROXY_STARTED)
-                registerReceiver(receiver, filter)
-                startProxyService(intentToMoveProxyServiceToForeGround)
-                startedService = true
-            }
+            bindService(intentToBindToProxyServiceToForeGround, serviceConnection, BIND_AUTO_CREATE)
         } else {
             setContentView(R.layout.package_not_available)
             if (isFileProviderThere()) cv_fileProvider.visibility = View.GONE
@@ -62,14 +43,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
-    private fun startProxyService(intent: Intent) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            startForegroundService(intent)
-        } else {
-            startService(intent)
-        }
-    }
 
     override fun finish() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -81,37 +54,19 @@ class MainActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        if (startedService) {
-            unregisterReceiver(receiver)
-            stopService(intentToMoveProxyServiceToForeGround)
-        }
-        else if(useBoundService && isBound){
-                unbindService(serviceConnection)
-                isBound = false
+
+        if (isBound) {
+            unbindService(serviceConnection)
+            isBound = false
             stopService(intentToBindToProxyServiceToForeGround)
         }
     }
 
-    inner class ServerStartedActionReceiver : BroadcastReceiver() {
-        override fun onReceive(
-            context: Context,
-            intent: Intent
-        ) {
-            println("Proxy Server started broadcast has been received")
-            when (intent.action) {
-                ACTION_BROADCAST_PROXY_STARTED -> {
-                    loadWebView(intent.getIntExtra("port", 0))
-                }
-            }
-
-        }
-    }
-
-    class IncomingHandler(private val activityRef:WeakReference<MainActivity>) : Handler() {
+    class IncomingHandler(private val activityRef: WeakReference<MainActivity>) : Handler() {
         override fun handleMessage(msg: Message) {
             when (msg.what) {
                 MSG_HTTP_SERVER_STARTED -> {
-                    activityRef.get()?.loadWebView(msg.data.getInt("port",0))
+                    activityRef.get()?.loadWebView(msg.data.getInt("port", 0))
                 }
             }
         }
@@ -131,6 +86,7 @@ class MainActivity : AppCompatActivity() {
         override fun onServiceDisconnected(name: ComponentName?) {
             isBound = false
         }
+
         override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
             isBound = true
             messengerToSendMsgToRemoteService = Messenger(service).also {
