@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="package_title_size">15sp</dimen>
+    <dimen name="suitepad_logo_width">150dp</dimen>
+    <dimen name="suitepad_logo_height">75dp</dimen>
+</resources>

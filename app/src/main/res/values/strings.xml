@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Suitepad</string>
+    <string name="packages_missing">Required packages missing!!!</string>
+    <string name="package_missing_text">You need the following apps to be\ninstalled\nbefore proceeding further</string>
+    <string name="suitepadfileprovider">File Provider</string>
+    <string name="suitepad_proxyserver2">Proxy Server</string>
 </resources>

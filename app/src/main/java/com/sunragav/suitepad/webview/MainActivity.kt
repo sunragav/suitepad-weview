@@ -7,13 +7,17 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.sunragav.suitepad.webview.BuildConfig.*
 import com.sunragav.suitepad.webview.utils.OkHttpWebClient
+import com.sunragav.suitepad.webview.utils.areRequiredPackagesPresent
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.package_not_available.*
 
 
 class MainActivity : AppCompatActivity() {
 
 
     private lateinit var receiver: BroadcastReceiver
+
+    private var startedService = false
 
     private val moveProxyServiceToForeGround = Intent().apply {
         action = ACTION_MOVE_TO_FOREGROUND
@@ -26,15 +30,21 @@ class MainActivity : AppCompatActivity() {
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        webView.settings.apply {
-            javaScriptEnabled = true
+
+        if (areRequiredPackagesPresent()) {
+            setContentView(R.layout.activity_main)
+            webView.settings.apply {
+                javaScriptEnabled = true
+            }
+            receiver = ServerStartedActionReceiver()
+            val filter = IntentFilter()
+            filter.addAction(ACTION_BROADCAST_PROXY_STARTED)
+            registerReceiver(receiver, filter)
+            startProxyService(moveProxyServiceToForeGround)
+            startedService = true
+        } else {
+            setContentView(R.layout.package_not_available)
         }
-        receiver = ServerStartedActionReceiver()
-        val filter = IntentFilter()
-        filter.addAction(ACTION_BROADCAST_PROXY_STARTED)
-        registerReceiver(receiver, filter)
-        startProxyService(moveProxyServiceToForeGround)
     }
 
 
@@ -47,18 +57,19 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun finish() {
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             super.finishAndRemoveTask()
-        }
-        else {
+        } else {
             super.finish()
         }
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        unregisterReceiver(receiver)
-        stopService(moveProxyServiceToForeGround)
+        if (startedService) {
+            unregisterReceiver(receiver)
+            stopService(moveProxyServiceToForeGround)
+        }
     }
 
 
@@ -72,7 +83,7 @@ class MainActivity : AppCompatActivity() {
             println("Proxy Server started broadcast has been received")
             when (intent.action) {
                 ACTION_BROADCAST_PROXY_STARTED -> {
-                    webView.webViewClient = OkHttpWebClient(intent.getIntExtra("port",0))
+                    webView.webViewClient = OkHttpWebClient(intent.getIntExtra("port", 0))
                     webView.loadUrl("$BASE_URL$SAMPLE_HTML")
                 }
             }
