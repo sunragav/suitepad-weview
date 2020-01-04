@@ -54,7 +54,7 @@ The app identifies the packages that are missing and informs user to install bot
 <img src="https://i.imgur.com/xsvmdkc.jpg" width="400">
 
 Note that the android service is a Bound service.
-Once the android service has started the http server, the communication happens directly between the http server and the webview (the  with oKhttp client interception) in the app using secured socket connection.
+Once the android service has started the http server, the communication happens directly between the http server and the webview (ofcourse  with the interception of the okHttp client which proxies the request to localhost) in the app using secured socket connection.
 The service gets unbound and stopped once the activity finishes, which kills the http server as well.
 To verify that the app uses a secured connection and that it is being proxied to the https://localhost:8091/sample.html, try to hit the localhost from the chrome browser while the app is running (Note that because it is a bound service that runs the http server behind the scenes, the http server stops as soon as the webview app is killed).
 The chrome will warn this site as not trusted as we have used a custom seslf-signed certificate.
