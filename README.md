@@ -1,6 +1,6 @@
 # suitepad-weview
 
-## Note: This app defines a custom permission which the other apps uses. So it should be installed first. Otherwise the other apps cannot find the permission that they use.
+## Note: This app defines a custom permission which the other apps uses. So it should be installed first. Otherwise the other apps ([ProxyServer](https://github.com/sunragav/suitepad-proxyserver) and the [FileProvider](https://github.com/sunragav/suitepad-localcache)) cannot find the permission that they use.
 
 
 This is a simple application that has only a webview.
