@@ -3,8 +3,8 @@
 This is a simple application that has only a webview.
 It binds to the android-service (a messenger service via a service connection object), named ProxyServer,  from another app and waits for it start the http server in a secured way using the localhost.bks keystore.
 The Proxy service notifies that it has started the http server, in a secured mode, with a message passed via the messenger.
-This application listens to that messsage via its IncomingHandler and loads the url "https://someremoteurl.com/sample.html.
-The webview's client is actually a custom OkHttp client(a subclass of WebViewClient) which proxies that request to "https://localhost:8091/sample.html.
+This application listens to that messsage via its IncomingHandler and loads the url "https://someremoteurl.com/sample.html".
+The webview's client is actually a custom OkHttp client(a subclass of WebViewClient) which proxies that request to "https://localhost:8091/sample.html".
 This is done by intercepting the call in the shouldInterceptRequest mehtod of the WebViewClient class. So every call that refers to the
 domain someremoteurl.com that the webview requests will be intercepted and changed to localhost by the okhttpclient. Also it uses a custom
 HostNameVerifier to verify the localhost as a domain.
