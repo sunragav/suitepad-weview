@@ -32,12 +32,9 @@ The server serves that as well, after which the webview displays the content.
 <img src="https://media.giphy.com/media/jrobNNOqQQpvy7cR8Q/giphy.gif" width="400">
 
 
-This app requires the other 2 apps ProxyServer and the FileProvider to be installed, before it can run.
+This app requires the other 2 apps ProxyServer and the FileProvider to be installed, before it can run. All apps run in their own separate process.
 
 <img src="https://i.imgur.com/J3ssdc5.png" width="400">
-
-This app defines a custom permission which the other apps uses. So it should be installed first. Otherwise the other apps cannot find the permission that they use.
-All apps run in their own separate process.
 
 Note that the android service is a Bound service.
 Once the android service has started the http server, the communication happens directly between the http server and the webview (the  with oKhttp client interception) in the app using secured socket connection.
@@ -51,5 +48,7 @@ When we see the certificate we that the localhost http server indeed returning o
 When we ignore and visit the site we will see the sample.html loaded with the html table headers but not the json. Because the sample.html returned will refer to the https://someremoteurl.com/sample.json which can not be routed to localhost by the chrome.
 
 <img src="https://i.imgur.com/GNDpNBi.jpg" width="400">
+
+## Note: This app defines a custom permission which the other apps uses. So it should be installed first. Otherwise the other apps cannot find the permission that they use.
 
 
