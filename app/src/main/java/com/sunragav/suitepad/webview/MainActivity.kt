@@ -12,6 +12,7 @@ import com.sunragav.suitepad.webview.utils.isFileProviderThere
 import com.sunragav.suitepad.webview.utils.isProxyWebserverThere
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.package_not_available.*
+import timber.log.Timber.d
 import java.lang.ref.WeakReference
 
 
@@ -45,11 +46,7 @@ class MainActivity : AppCompatActivity() {
 
 
     override fun finish() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            super.finishAndRemoveTask()
-        } else {
-            super.finish()
-        }
+        super.finishAndRemoveTask()
     }
 
     override fun onDestroy() {
@@ -66,6 +63,7 @@ class MainActivity : AppCompatActivity() {
         override fun handleMessage(msg: Message) {
             when (msg.what) {
                 MSG_HTTP_SERVER_STARTED -> {
+                    d("Https Proxy web server successfully started!!!")
                     activityRef.get()?.loadWebView(msg.data.getInt("port", 0))
                 }
             }

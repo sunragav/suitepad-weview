@@ -5,6 +5,7 @@ import android.webkit.WebResourceResponse
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import com.sunragav.suitepad.webview.BuildConfig.BASE_URL
+import com.sunragav.suitepad.webview.HostNameVerifier
 import io.reactivex.Single
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -17,6 +18,7 @@ class OkHttpWebClient(private val port: Int) : WebViewClient() {
     private val okHttpClient = OkHttpClient
         .Builder()
         .cache(null)
+        .hostnameVerifier(HostNameVerifier())
         .connectTimeout(60, TimeUnit.SECONDS)
         .readTimeout(60, TimeUnit.SECONDS)
         .writeTimeout(60, TimeUnit.SECONDS).build()
@@ -44,7 +46,7 @@ class OkHttpWebClient(private val port: Int) : WebViewClient() {
     private fun handleRequestViaOkHttp(url: String): WebResourceResponse {
         val call = okHttpClient.newCall(
             Request.Builder()
-                .url(url.replace(BASE_URL, "http://localhost:$port/"))
+                .url(url.replace(BASE_URL, "https://localhost:$port/"))
                 .build()
         )
         val disposable = CompositeDisposable()
