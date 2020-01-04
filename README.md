@@ -1,5 +1,8 @@
 # suitepad-weview
 
+## Note: This app defines a custom permission which the other apps uses. So it should be installed first. Otherwise the other apps cannot find the permission that they use.
+
+
 This is a simple application that has only a webview.
 It binds to the android-service (a messenger service via a service connection object), named [ProxyServer](https://github.com/sunragav/suitepad-proxyserver),  from another app and waits for it start the http server in a secured way using the localhost.bks keystore.
 The Proxy service notifies that it has started the http server, in a secured mode, with a message passed via the messenger.
@@ -63,6 +66,5 @@ When we ignore and visit the site we will see the sample.html loaded with the ht
 
 <img src="https://i.imgur.com/GNDpNBi.jpg" width="400">
 
-## Note: This app defines a custom permission which the other apps uses. So it should be installed first. Otherwise the other apps cannot find the permission that they use.
 
 
