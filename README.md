@@ -1,7 +1,7 @@
 # suitepad-weview
 
 This is a simple application that has only a webview.
-It binds to the android-service (a messenger service via a service connection object), named ProxyServer,  from another app and waits for it start the http server in a secured way using the localhost.bks keystore.
+It binds to the android-service (a messenger service via a service connection object), named [ProxyServer](https://github.com/sunragav/suitepad-proxyserver),  from another app and waits for it start the http server in a secured way using the localhost.bks keystore.
 The Proxy service notifies that it has started the http server, in a secured mode, with a message passed via the messenger.
 This application listens to that messsage via its IncomingHandler and loads the url "https://someremoteurl.com/sample.html".
 The webview's client is actually a custom OkHttp client(a subclass of WebViewClient) which proxies that request to "https://localhost:8091/sample.html".
@@ -31,10 +31,24 @@ The server serves that as well, after which the webview displays the content.
 
 <img src="https://media.giphy.com/media/jrobNNOqQQpvy7cR8Q/giphy.gif" width="400">
 
-
-This app requires the other 2 apps ProxyServer and the FileProvider to be installed, before it can run. All apps run in their own separate process.
+## Dependent apps
+This app requires the other 2 apps [ProxyServer](https://github.com/sunragav/suitepad-proxyserver) and the [FileProvider](https://github.com/sunragav/suitepad-localcache) to be installed, before it can run. All apps run in their own separate process.
 
 <img src="https://i.imgur.com/J3ssdc5.png" width="400">
+
+But this app should be installed first. When started to run without installing them will show a screen saying that the other components have to be installed.
+The app identifies the packages that are missing and informs user to install both or only the one that is missing as shown below:
+
+## Both are missing
+<img src="https://i.imgur.com/AMCBx7M.jpg" width="400">
+
+## Only File Provider is missing
+
+<img src="https://i.imgur.com/ygQumXc.jpg" width="400">
+
+## Only Proxy Server is missing
+
+<img src="https://i.imgur.com/xsvmdkc.jpg" width="400">
 
 Note that the android service is a Bound service.
 Once the android service has started the http server, the communication happens directly between the http server and the webview (the  with oKhttp client interception) in the app using secured socket connection.
