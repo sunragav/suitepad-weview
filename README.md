@@ -66,5 +66,27 @@ When we ignore and visit the site we will see the sample.html loaded with the ht
 
 <img src="https://i.imgur.com/GNDpNBi.jpg" width="400">
 
+## Without shrinking and without progaurd rules, the original release apk size is 2.9 MB and the downlaod size is 2.6 MB
+
+![without-shrinking](https://i.imgur.com/RIzVe2n.jpg)
+
+## With shrinking but without progaurd rules, the release apk size is 1.4 MB and the download size is 1.1 MB
+
+![with-shrinking-alone-without-progaurd](https://imgur.com/8XvpnHi.jpg)
+
+## Including the progaurd rules the release apk, size is 1.2 MB and the downlaod size is 963.2 MB
+
+![with-progaurd](https://i.imgur.com/imbOTak.jpg)
+
+## Shrinking vs (Shrinking+Progaurd) comparison (206.7 KB saved)
+
+![shrinking-vs-progaurd](https://i.imgur.com/oTnFfdQ.jpg)
+
+## Original vs (Shrinking+Progaurd) comparison ( 1.7 MB saved)
+
+![orginal-vs-optimized](https://i.imgur.com/W6ueXMp.jpg)
+
+
+
 
 
