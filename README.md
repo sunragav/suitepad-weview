@@ -67,7 +67,7 @@ When we ignore and visit the site we will see the sample.html loaded with the ht
 <img src="https://i.imgur.com/GNDpNBi.jpg" width="400">
 
 # NOTE: THE RELEASE SIGNING KEY HAS BEEN ADDED JUST FOR THE SAKE OF COMPLETION AND DEMONSTRATION. BECAUSE PROGAURD RULES ARE APPLIED ONLY ON THE RELEASE FLAVOR. THE SIGNING KEY SHOULD BE HIDDEN AND KEPT SECRET FROM OTHERS IN A SECURED PLACE AND ACCESSED VIA CI/CD PROCESS.
-## Without shrinking and without progaurd rules, the original release apk size is 2.9 MB and the downlaod size is 2.6 MB
+## Without shrinking and without progaurd rules, the original release apk size is 2.9 MB and the download size is 2.6 MB
 
 ![without-shrinking](https://i.imgur.com/RIzVe2n.jpg)
 
@@ -75,7 +75,7 @@ When we ignore and visit the site we will see the sample.html loaded with the ht
 
 ![with-shrinking-alone-without-progaurd](https://imgur.com/8XvpnHi.jpg)
 
-## Including the progaurd rules the release apk, size is 1.2 MB and the downlaod size is 963.2 KB
+## Including the progaurd rules the release apk, size is 1.2 MB and the download size is 963.2 KB
 
 ![with-progaurd](https://i.imgur.com/imbOTak.jpg)
 
