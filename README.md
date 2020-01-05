@@ -66,6 +66,7 @@ When we ignore and visit the site we will see the sample.html loaded with the ht
 
 <img src="https://i.imgur.com/GNDpNBi.jpg" width="400">
 
+#NOTE: THE RELEASE SIGNING KEY HAS BEEN ADDED JUST FOR THE SAKE OF COMPLETION AND DEMONSTRATION. THIS SHOULD BE HIDDEN AND KEPT SECRET FROM OTHERS IN A SECURED PLACED AND ACCESSED VIA CI/CD process.
 ## Without shrinking and without progaurd rules, the original release apk size is 2.9 MB and the downlaod size is 2.6 MB
 
 ![without-shrinking](https://i.imgur.com/RIzVe2n.jpg)
@@ -85,6 +86,7 @@ When we ignore and visit the site we will see the sample.html loaded with the ht
 ## Original vs (Shrinking+Progaurd) comparison ( 1.7 MB saved)
 
 ![orginal-vs-optimized](https://i.imgur.com/W6ueXMp.jpg)
+
 
 
 
