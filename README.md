@@ -75,7 +75,7 @@ When we ignore and visit the site we will see the sample.html loaded with the ht
 
 ![with-shrinking-alone-without-progaurd](https://imgur.com/8XvpnHi.jpg)
 
-## Including the progaurd rules the release apk, size is 1.2 MB and the downlaod size is 963.2 MB
+## Including the progaurd rules the release apk, size is 1.2 MB and the downlaod size is 963.2 KB
 
 ![with-progaurd](https://i.imgur.com/imbOTak.jpg)
 
