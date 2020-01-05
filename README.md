@@ -87,7 +87,7 @@ When we ignore and visit the site we will see the sample.html loaded with the ht
 
 ![orginal-vs-optimized](https://i.imgur.com/W6ueXMp.jpg)
 
-By the way, because I have used Android studio 3.5.3 for the development,  the shrinking+obfuscation using progaurd rules are directly done using the R8 compiler to output the dex. There is no intermediate java byte code generated.
+By the way, because I have used Android studio 3.5.3 for the development,  the shrinking+obfuscation using progaurd rules are directly done using the R8 compiler to output the dex. There is no intermediate optimized java byte code generated like it was previously when using D8 compiler.
 
 ![R8](https://i.imgur.com/gaW51ac.jpg)
 
